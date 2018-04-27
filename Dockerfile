@@ -1,14 +1,10 @@
-FROM alpine:latest
+FROM python:2.7.14-alpine3.7
 
 MAINTAINER Ying <wandy1208@gmail.com>
 
 ENV ROOT_PASSWORD root
 
 RUN apk add --update --no-cache \
-    python \
-    python-dev \
-    py-pip \
-    wget \
     curl \
     unzip 
 
