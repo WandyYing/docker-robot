@@ -25,7 +25,7 @@ RUN pip install -U \
 COPY scripts/ /home/seluser/exec/
 
 
-s#ssh-server
+#ssh-server
 RUN apk --update add openssh \
         && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
         && echo "root:${ROOT_PASSWORD}" | chpasswd \
