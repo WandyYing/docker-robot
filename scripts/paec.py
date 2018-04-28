@@ -47,7 +47,7 @@ def run__tests(report_portal_params=None):
         pabot.extend(report_portal_params)
 
     # pabot.append(".")
-    result = command_call(pabot, shell = True)
+    result = command_call(pabot, shell = False)
     # result = command_call(pabot, env=environment_variables())
     # remove_duplicated_messages(output_dir(), pabot)
     return result

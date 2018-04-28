@@ -21,7 +21,7 @@ RUN apt-get -yqq  update \
     python-setuptools \
     unzip \
     wget \
-    curl \
+    curl 
 
 # Fix hanging Chrome, see https://github.com/SeleniumHQ/docker-selenium/issues/87
 ENV DBUS_SESSION_BUS_ADDRESS /dev/null

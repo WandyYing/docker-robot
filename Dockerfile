@@ -1,34 +1,39 @@
 FROM ubuntu:16.04
 
-LABEL description="Docker image for the Robot Framework http://robotframework.org/ modified"
-LABEL usage=" "
+MAINTAINER Ying <wandy1208@gmail.com>
 
-# Set timezone to Europe/Helsinki and install dependencies
-#   * git & curl & wget
-#   * python
-#   * xvfb
-#   * chrome
-#   * chrome selenium driver
-#   * hi-res fonts
+ENV ROOT_PASSWORD root
 
-RUN apt-get -yqq  update \
-    && apt-get upgrade -yqq \
-    && apt-get install -y \
-    apt-utils \
-    sudo \
-    tzdata \
+RUN apt-get -qqy update \
+  && apt-get -qqy --no-install-recommends install \
+    python2.7 \
     python-pip \
-    python-setuptools \
-    unzip \
+    python-openssl \
+    libssl-dev \
+    libffi-dev \
     wget \
     curl \
+    unzip 
 
-# Fix hanging Chrome, see https://github.com/SeleniumHQ/docker-selenium/issues/87
-ENV DBUS_SESSION_BUS_ADDRESS /dev/null
-ENV DISPLAY=:99
+COPY scripts/ /home/seluser/exec/
+##Robot env
+# RUN pip install --upgrade pip \
+#  && 
+RUN pip install --upgrade setuptools \
+ && pip install -Ur /home/seluser/exec/requirements.txt 
 
-# Install Robot Framework libraries
-COPY requirements.txt /tmp/
-RUN pip install --upgrade pip
-RUN pip install -Ur /tmp/requirements.txt && rm /tmp/requirements.txt
-COPY paec.py /tmp/
+#ssh-server
+RUN apt-get -qqy update \
+  && apt-get -qqy install -y openssh-server \
+        && mkdir /var/run/sshd \
+        && echo "root:${ROOT_PASSWORD}" | chpasswd \
+        && sed -ri 's/^PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config \
+        && sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+        && rm -rf /var/cache/apk/* /tmp/*
+
+COPY entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+EXPOSE 22
+
+ENTRYPOINT ["entrypoint.sh"]
