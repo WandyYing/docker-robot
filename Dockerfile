@@ -5,6 +5,10 @@ MAINTAINER Ying <wandy1208@gmail.com>
 ENV ROOT_PASSWORD root
 
 RUN apk add --update --no-cache \
+    python \
+    python-dev \
+    py-pip \
+    wget \
     curl \
     unzip 
 
