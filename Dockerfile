@@ -28,9 +28,14 @@ RUN apt-get -qqy update \
 
 # Fixed python-wxgtk2.8 not available issue
 # Reference https://askubuntu.com/questions/789302/install-python-wxgtk2-8-on-ubuntu-16-04
-RUN echo "deb http://archive.ubuntu.com/ubuntu wily main universe" | sudo tee /etc/apt/sources.list.d/wily-copies.list \
-    && apt update \
-    && apt install python-wxgtk2.8 \
+# RUN echo "deb http://archive.ubuntu.com/ubuntu wily main universe" | tee /etc/apt/sources.list.d/wily-copies.list \
+#########################################
+##    REPOSITORIES AND DEPENDENCIES    ##
+#########################################
+RUN echo 'deb http://archive.ubuntu.com/ubuntu trusty main universe restricted' > /etc/apt/sources.list && \
+    echo 'deb http://archive.ubuntu.com/ubuntu trusty-updates main universe restricted' >> /etc/apt/sources.list && \
+    && apt-get update \
+    && apt-get install -y python-wxgtk2.8 \
     && rm /etc/apt/sources.list.d/wily-copies.list \
     && rm -rf /var/cache/apk/* /tmp/* \
 
