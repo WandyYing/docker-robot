@@ -25,8 +25,8 @@ RUN pip install -U \
 COPY scripts/ /home/seluser/exec/
 
 # wxPython
-# docker build --build-arg WXPY_SRC_URL=https://svwh.dl.sourceforge.net/project/wxpython/wxPython/2.8.12.1/wxPython-src-2.8.12.1.tar.bz2 -t deforce/alpine-wxpython:3.0.1.0 .
-ARG WXPY_SRC_URL="https://svwh.dl.sourceforge.net/project/wxpython/wxPython/2.8.12.1/wxPython-src-2.8.12.1.tar.bz2"
+# docker build --build-arg WXPY_SRC_URL=http://heanet.dl.sourceforge.net/project/wxpython/wxPython/3.0.2.0/wxPython-src-3.0.2.0.tar.bz2 -t deforce/alpine-wxpython:3.0.1.0 .
+ARG WXPY_SRC_URL="http://heanet.dl.sourceforge.net/project/wxpython/wxPython/3.0.2.0/wxPython-src-3.0.2.0.tar.bz2"
 
 RUN echo "http://nl.alpinelinux.org/alpine/edge/main"         \
       >> /etc/apk/repositories                             && \
